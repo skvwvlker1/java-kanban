@@ -42,7 +42,7 @@ public class Main {
         taskManager.updateSubtask(subtask2);
         subtask3.setStatus(TaskStatus.IN_PROGRESS);
         taskManager.updateSubtask(subtask3);
-
+        System.out.println("UPDATED...");
         System.out.println("Updated список task");
         System.out.println(taskManager.getTasks());
         System.out.println("Updated список epic");
@@ -51,9 +51,9 @@ public class Main {
         System.out.println(taskManager.getSubtasks());
 
         taskManager.deleteTaskById(task2.getTaskId());
-
         taskManager.deleteEpicById(epic2.getTaskId());
 
+        System.out.println("UPDATED after delete task, epic");
         System.out.println("Updated#2 список task");
         System.out.println(taskManager.getTasks());
         System.out.println("Updated#2 список epic");
@@ -63,10 +63,14 @@ public class Main {
 
         System.out.println(taskManager.getSubtasksByEpicId(epic1.getTaskId()));
         System.out.println(taskManager.getSubtasks());
-       // taskManager.clearSubtasks();
 
-        System.out.println("");
 
-        System.out.println(epic1.getTitle() + ", status: " + epic1.getStatus() + "subtasks: " + taskManager.getSubtasksByEpicId(epic1.getTaskId()) );
+        System.out.println(epic1.getTitle() + ", status: " + epic1.getStatus() + " subtasks: " + taskManager.getSubtasksByEpicId(epic1.getTaskId()));
+        System.out.println(taskManager.getSubtasks());
+
+        taskManager.clearSubtasks();
+        System.out.println("subtasks after clear = " + taskManager.getSubtasks());
+        taskManager.clearTasks();
+        System.out.println("tasks after clear = " + taskManager.getTasks());
     }
 }

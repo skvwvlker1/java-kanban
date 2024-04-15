@@ -111,12 +111,14 @@ public class TaskManager {
 
     public ArrayList<Subtask> getSubtasksByEpicId(int epicId) {
         ArrayList<Subtask> subtasksByEpic = new ArrayList<>();
-        for (Integer subtaskId : epics.get(epicId).getSubtasksId()) {
-            Subtask subtask = subtasks.get(subtaskId);
-            if (!subtasksByEpic.contains(subtask)) {
-                subtasksByEpic.add(subtasks.get(subtaskId));
+        Epic epic = epics.get(epicId);
+        if (epic != null) {
+            for (Integer subtaskId : epics.get(epicId).getSubtasksId()) {
+                Subtask subtask = subtasks.get(subtaskId);
+                if (!subtasksByEpic.contains(subtask)) {
+                    subtasksByEpic.add(subtasks.get(subtaskId));
+                }
             }
-
         }
         return subtasksByEpic;
     }
