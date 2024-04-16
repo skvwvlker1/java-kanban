@@ -14,7 +14,7 @@ public class Main {
         Task task2 = new Task("Задача 2", "Описание задачи 2", TaskStatus.IN_PROGRESS);
         taskManager.addTask(task2);
 
-        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1", TaskStatus.NEW);
+        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1");
         taskManager.addEpic(epic1);
         Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", TaskStatus.NEW, epic1.getTaskId());
         taskManager.addSubtask(subtask1);
@@ -23,7 +23,7 @@ public class Main {
         taskManager.addSubtask(subtask2);
         epic1.getSubtasksId().add(subtask2.getTaskId());
 
-        Epic epic2 = new Epic("Эпик 2", "Описание эпика 2", TaskStatus.NEW);
+        Epic epic2 = new Epic("Эпик 2", "Описание эпика 2");
         taskManager.addEpic(epic2);
         Subtask subtask3 = new Subtask("Подзадача 3", "Описание подзадачи 3", TaskStatus.NEW, epic2.getTaskId());
         taskManager.addSubtask(subtask3);
@@ -52,6 +52,8 @@ public class Main {
 
         taskManager.deleteTaskById(task2.getTaskId());
         taskManager.deleteEpicById(epic2.getTaskId());
+        subtask1.setStatus(TaskStatus.DONE);
+        taskManager.updateSubtask(subtask1);
 
         System.out.println("UPDATED after delete task, epic");
         System.out.println("Updated#2 список task");
@@ -72,5 +74,7 @@ public class Main {
         System.out.println("subtasks after clear = " + taskManager.getSubtasks());
         taskManager.clearTasks();
         System.out.println("tasks after clear = " + taskManager.getTasks());
+        taskManager.clearEpics();
+        System.out.println("epics after clear = " + taskManager.getEpics());
     }
 }
