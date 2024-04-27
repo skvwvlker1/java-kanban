@@ -62,6 +62,8 @@ public class Main {
         taskManager.getTaskById(task1.getTaskId());
         taskManager.getEpicById(epic2.getTaskId());
         taskManager.getSubtaskById(subtask2.getTaskId());
+        taskManager.getSubtasksByEpicId(epic2.getTaskId());
+        System.out.println(taskManager.getSubtasksByEpicId(epic2.getTaskId()));
         printAllTasks(taskManager);
     }
 
