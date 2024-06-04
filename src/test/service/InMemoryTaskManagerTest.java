@@ -55,7 +55,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void testDeleteTaskById() {
-        Task task = new Task("test1", "task1 desc", TaskStatus.NEW);
+        Task task = new Task("test", "task1 desc", TaskStatus.NEW);
         taskManager.addTask(task);
         taskManager.deleteTaskById(task.getTaskId());
         assertTrue(taskManager.getTasks().isEmpty());
