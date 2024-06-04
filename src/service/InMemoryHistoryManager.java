@@ -9,10 +9,12 @@ public class InMemoryHistoryManager implements HistoryManager {
         Task task;
         Node prev;
         Node next;
+
         Node(Task task) {
             this.task = task;
         }
     }
+
     private Node head;
     private Node tail;
     private Map<Integer, Node> nodeMap = new HashMap<>();
@@ -51,6 +53,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             nodeMap.remove(id);
         }
     }
+
     private void linkLast(Node node) {
         Node last = tail;
         tail = node;
@@ -61,6 +64,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             node.prev = last;
         }
     }
+
     private void removeNode(Node node) {
         Node next = node.next;
         Node prev = node.prev;

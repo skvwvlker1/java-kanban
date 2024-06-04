@@ -10,11 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class InMemoryTaskManagerTest {
     private InMemoryTaskManager taskManager;
     private InMemoryHistoryManager historyManager;
+
     @BeforeEach
     public void setup() {
         taskManager = new InMemoryTaskManager();
         historyManager = new InMemoryHistoryManager();
     }
+
     @Test
     public void testEqualTasksSelf() {
 
@@ -45,11 +47,12 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void testAddTask(){
+    public void testAddTask() {
         Task task = new Task("task1", "task1 desc", TaskStatus.NEW);
         taskManager.addTask(task);
         assertEquals(1, taskManager.getTasks().size());
     }
+
     @Test
     public void testDeleteTaskById() {
         Task task = new Task("test1", "task1 desc", TaskStatus.NEW);

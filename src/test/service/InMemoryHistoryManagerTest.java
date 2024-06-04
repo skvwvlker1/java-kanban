@@ -26,6 +26,7 @@ class InMemoryHistoryManagerTest {
         historyManager.remove(task.getTaskId());
         assertTrue(historyManager.getHistory().isEmpty());
     }
+
     @Test
     public void testNoDuplicatesInHistory() {
         Task task = new Task("task1", "task1 desc", TaskStatus.NEW);
