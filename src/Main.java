@@ -2,6 +2,7 @@ import model.Task;
 import model.Subtask;
 import model.Epic;
 import model.TaskStatus;
+import service.HistoryManager;
 import service.Managers;
 import service.TaskManager;
 
@@ -9,61 +10,41 @@ public class Main {
     public static void main(String[] args) {
 
         TaskManager taskManager = Managers.getDefault();
+        HistoryManager historyManager = Managers.getDefaultHistory();
 
         Task task1 = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW);
-        taskManager.addTask(task1);
         Task task2 = new Task("Задача 2", "Описание задачи 2", TaskStatus.IN_PROGRESS);
+        taskManager.addTask(task1);
         taskManager.addTask(task2);
 
         Epic epic1 = new Epic("Эпик 1", "Описание эпика 1");
         taskManager.addEpic(epic1);
-        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1", TaskStatus.NEW, epic1.getTaskId());
+        Subtask subtask1 = new Subtask("Подзадача 1 Эпик 1", "Описание подзадачи 1", TaskStatus.NEW, epic1.getTaskId());
         taskManager.addSubtask(subtask1);
-
-        Subtask subtask2 = new Subtask("Подзадача 2", "Описание подзадачи 2", TaskStatus.IN_PROGRESS, epic1.getTaskId());
+        Subtask subtask2 = new Subtask("Подзадача 2 Эпик 1", "Описание подзадачи 2", TaskStatus.IN_PROGRESS, epic1.getTaskId());
         taskManager.addSubtask(subtask2);
-
+        Subtask subtask3 = new Subtask("Подзадача 3 Эпик 1", "Описание подзадачи 3", TaskStatus.IN_PROGRESS, epic1.getTaskId());
+        taskManager.addSubtask(subtask3);
 
         Epic epic2 = new Epic("Эпик 2", "Описание эпика 2");
         taskManager.addEpic(epic2);
-        Subtask subtask3 = new Subtask("Подзадача 3", "Описание подзадачи 3", TaskStatus.NEW, epic2.getTaskId());
-        taskManager.addSubtask(subtask3);
 
-
-
-        Task task3 = new Task("Задача 3", "Описание задачи 3", TaskStatus.NEW);
-        Task task4 = new Task("Задача 4", "Описание задачи 4", TaskStatus.NEW);
-        Task task5 = new Task("Задача 5", "Описание задачи 5", TaskStatus.NEW);
-        Task task6 = new Task("Задача 6", "Описание задачи 6", TaskStatus.NEW);
-        Task task7 = new Task("Задача 7", "Описание задачи 7", TaskStatus.NEW);
-        Task task8 = new Task("Задача 8", "Описание задачи 8", TaskStatus.NEW);
-        Task task9 = new Task("Задача 9", "Описание задачи 9", TaskStatus.NEW);
-        Task task10 = new Task("Задача 10", "Описание задачи 10", TaskStatus.NEW);
-
-        taskManager.addTask(task3);
-        taskManager.addTask(task4);
-        taskManager.addTask(task5);
-        taskManager.addTask(task6);
-        taskManager.addTask(task7);
-        taskManager.addTask(task8);
-        taskManager.addTask(task9);
-        taskManager.addTask(task10);
 
         taskManager.getTaskById(task1.getTaskId());
         taskManager.getTaskById(task2.getTaskId());
-        taskManager.getTaskById(task3.getTaskId());
-        taskManager.getTaskById(task4.getTaskId());
-        taskManager.getTaskById(task5.getTaskId());
-        taskManager.getTaskById(task6.getTaskId());
-        taskManager.getTaskById(task7.getTaskId());
-        taskManager.getTaskById(task8.getTaskId());
-        taskManager.getTaskById(task9.getTaskId());
-        taskManager.getTaskById(task10.getTaskId());
         taskManager.getTaskById(task1.getTaskId());
+        taskManager.getTaskById(task1.getTaskId());
+
+        taskManager.deleteTaskById(task1.getTaskId());
+
+        taskManager.getEpicById(epic1.getTaskId());
+        taskManager.deleteEpicById(epic1.getTaskId());
+
         taskManager.getEpicById(epic2.getTaskId());
+        taskManager.getSubtaskById(subtask1.getTaskId());
         taskManager.getSubtaskById(subtask2.getTaskId());
-        taskManager.getSubtasksByEpicId(epic2.getTaskId());
-        System.out.println(taskManager.getSubtasksByEpicId(epic2.getTaskId()));
+        taskManager.getSubtaskById(subtask3.getTaskId());
+
         printAllTasks(taskManager);
     }
 
@@ -92,10 +73,5 @@ public class Main {
             System.out.println(task);
         }
 
-        System.out.println("\n>>>NUM<<<\n");
-        for (int i = 0; i < manager.getHistory().size(); i++) {
-            Task task = manager.getHistory().get(i);
-            System.out.println((i + 1) + " " + task);
-        }
     }
 }

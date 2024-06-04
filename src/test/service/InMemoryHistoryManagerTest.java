@@ -12,20 +12,25 @@ class InMemoryHistoryManagerTest {
     InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
     @Test
-    public void testAddAndRetrieveHistory() {
-        Task task1 = new Task("задача 1", "описание 1", TaskStatus.NEW);
-        historyManager.add(task1);
-        Task task2 = new Task("задача 2", "описание 2", TaskStatus.IN_PROGRESS);
-        historyManager.add(task2);
-        Task task3 = new Task("задача 3", "описание 3", TaskStatus.DONE);
-        historyManager.add(task3);
+    public void testAddTaskToHistory() {
+        Task task = new Task("task1", "task1 desc", TaskStatus.NEW);
+        historyManager.add(task);
+        assertEquals(1, historyManager.getHistory().size());
+        assertEquals(task, historyManager.getHistory().get(0));
+    }
 
-        List<Task> history = historyManager.getHistory();
-
-        assertEquals(3, history.size());
-
-        assertEquals(task3, history.get(0));
-        assertEquals(task2, history.get(1));
-        assertEquals(task1, history.get(2));
+    @Test
+    public void testRemoveTaskFromHistory() {
+        Task task = new Task("task1", "task1 desc", TaskStatus.NEW);
+        historyManager.add(task);
+        historyManager.remove(task.getTaskId());
+        assertTrue(historyManager.getHistory().isEmpty());
+    }
+    @Test
+    public void testNoDuplicatesInHistory() {
+        Task task = new Task("task1", "task1 desc", TaskStatus.NEW);
+        historyManager.add(task);
+        historyManager.add(task);
+        assertEquals(1, historyManager.getHistory().size());
     }
 }
