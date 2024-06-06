@@ -1,13 +1,21 @@
-package test.service;
+package service;
 
 import model.*;
+import org.junit.jupiter.api.BeforeEach;
 import service.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
-    InMemoryTaskManager taskManager = new InMemoryTaskManager();
+    private InMemoryTaskManager taskManager;
+    private InMemoryHistoryManager historyManager;
+
+    @BeforeEach
+    public void setup() {
+        taskManager = new InMemoryTaskManager();
+        historyManager = new InMemoryHistoryManager();
+    }
 
     @Test
     public void testEqualTasksSelf() {
@@ -39,16 +47,33 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void testDeleteSubtaskById() {
+    public void testAddTask() {
+        Task task = new Task("task1", "task1 desc", TaskStatus.NEW);
+        taskManager.addTask(task);
+        assertEquals(1, taskManager.getTasks().size());
+    }
 
-        Epic epic = new Epic("Эпик", "описание эпика");
-        taskManager.addEpic(epic);
-        Subtask subtask = new Subtask("подзадачи", "описание подзадачи", TaskStatus.NEW, epic.getTaskId());
-        taskManager.addSubtask(subtask);
-        int subtaskId = subtask.getTaskId();
+    @Test
+    public void testDeleteTaskById() {
+        Task task = new Task("test", "task1 desc", TaskStatus.NEW);
+        taskManager.addTask(task);
+        taskManager.deleteTaskById(task.getTaskId());
+        assertTrue(taskManager.getTasks().isEmpty());
+    }
 
-        assertTrue(taskManager.getSubtasks().contains(subtask));
-        taskManager.deleteSubtaskById(subtaskId);
-        assertFalse(taskManager.getSubtasks().contains(subtask));
+    @Test
+    public void testHistoryManager() {
+        Task task = new Task("task1", "task1 desc", TaskStatus.NEW);
+        historyManager.add(task);
+        assertEquals(1, historyManager.getHistory().size());
+        assertEquals(task, historyManager.getHistory().get(0));
+    }
+
+    @Test
+    public void testRemoveFromHistory() {
+        Task task = new Task("task1", "task1 desc", TaskStatus.NEW);
+        historyManager.add(task);
+        historyManager.remove(task.getTaskId());
+        assertTrue(historyManager.getHistory().isEmpty());
     }
 }

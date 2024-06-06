@@ -1,4 +1,5 @@
 package model;
+
 import java.util.Objects;
 
 public class Task {
@@ -44,6 +45,7 @@ public class Task {
     public void setTaskId(int taskId) {
         this.taskId = taskId;
     }
+
     @Override
     public String toString() {
         return "Task{" +
@@ -53,6 +55,7 @@ public class Task {
                 ", status=" + status +
                 '}';
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
