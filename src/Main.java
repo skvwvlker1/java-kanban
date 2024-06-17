@@ -2,15 +2,17 @@ import model.Task;
 import model.Subtask;
 import model.Epic;
 import model.TaskStatus;
-import service.HistoryManager;
-import service.Managers;
+import service.FileBackedTaskManager;
 import service.TaskManager;
+
+import java.nio.file.Path;
 
 public class Main {
     public static void main(String[] args) {
 
-        TaskManager taskManager = Managers.getDefault();
-        HistoryManager historyManager = Managers.getDefaultHistory();
+        Path filePath = Path.of("tasks.csv");
+
+        FileBackedTaskManager taskManager = new FileBackedTaskManager(filePath);
 
         Task task1 = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW);
         Task task2 = new Task("Задача 2", "Описание задачи 2", TaskStatus.IN_PROGRESS);
@@ -28,24 +30,26 @@ public class Main {
 
         Epic epic2 = new Epic("Эпик 2", "Описание эпика 2");
         taskManager.addEpic(epic2);
-
+        Subtask subtask4 = new Subtask("Подзадача 1 Эпик 2", "Описание подзадачи 1 Эпика 2", TaskStatus.IN_PROGRESS, epic2.getTaskId());
+        taskManager.addSubtask(subtask4);
 
         taskManager.getTaskById(task1.getTaskId());
         taskManager.getTaskById(task2.getTaskId());
         taskManager.getTaskById(task1.getTaskId());
         taskManager.getTaskById(task1.getTaskId());
 
-        taskManager.deleteTaskById(task1.getTaskId());
-
         taskManager.getEpicById(epic1.getTaskId());
-        taskManager.deleteEpicById(epic1.getTaskId());
 
         taskManager.getEpicById(epic2.getTaskId());
         taskManager.getSubtaskById(subtask1.getTaskId());
         taskManager.getSubtaskById(subtask2.getTaskId());
         taskManager.getSubtaskById(subtask3.getTaskId());
+        taskManager.getSubtaskById(subtask4.getTaskId());
+
+        FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(filePath);
 
         printAllTasks(taskManager);
+        printAllTasks(loadedManager);
     }
 
     private static void printAllTasks(TaskManager manager) {
