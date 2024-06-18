@@ -1,7 +1,10 @@
 package service;
 
+import exceptions.LoadFromFileException;
+import exceptions.ManagerSaveException;
 import model.*;
 
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -20,16 +23,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         try (FileWriter writer = new FileWriter(filePath.toFile(), StandardCharsets.UTF_8)) {
             writer.write("id,type,name,status,description,epic\n");
             for (Task task : getTasks()) {
-                writer.write(taskToString(task) + "\n");
+                writer.write(task.toOutString() + "\n");
             }
             for (Epic epic : getEpics()) {
-                writer.write(epicToString(epic) + "\n");
+                writer.write(epic.toOutString() + "\n");
                 for (Subtask subtask : getSubtasksByEpicId(epic.getTaskId())) {
-                    writer.write(subtaskToString(subtask) + "\n");
+                    writer.write(subtask.toOutString() + "\n");
                 }
             }
         } catch (IOException e) {
-            System.out.println("Ошибка при записи файла");
+            throw new ManagerSaveException("Ошибка при записи файла", e);
         }
     }
 
@@ -105,34 +108,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         save();
     }
 
-    private String taskToString(Task task) {
-        return String.format("%d,%s,%s,%s,%s,",
-                task.getTaskId(),
-                TaskType.TASK,
-                task.getTitle(),
-                task.getStatus(),
-                task.getDescription());
-    }
-
-    private String epicToString(Epic epic) {
-        return String.format("%d,%s,%s,%s,%s,",
-                epic.getTaskId(),
-                TaskType.EPIC,
-                epic.getTitle(),
-                epic.getStatus(),
-                epic.getDescription());
-    }
-
-    private String subtaskToString(Subtask subtask) {
-        return String.format("%d,%s,%s,%s,%s,%d",
-                subtask.getTaskId(),
-                TaskType.SUBTASK,
-                subtask.getTitle(),
-                subtask.getStatus(),
-                subtask.getDescription(),
-                subtask.getEpicId());
-    }
-
     private static Task fromString(String value) {
         String[] fields = value.split(",");
         int id = Integer.parseInt(fields[0]);
@@ -171,8 +146,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                         break;
                 }
             }
+        } catch (FileNotFoundException e) {
+            throw new LoadFromFileException("Файл не найден");
         } catch (IOException e) {
-            System.out.println("Ошибка при чтении файла");
+            throw new LoadFromFileException("Ошибка при чтении файла");
         }
         return manager;
     }

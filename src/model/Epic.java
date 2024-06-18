@@ -20,4 +20,14 @@ public class Epic extends Task {
     public ArrayList<Integer> getSubtasksId() {
         return new ArrayList<>(subtasksId);
     }
+
+    @Override
+    public String toOutString() {
+        return String.format("%d,%s,%s,%s,%s,",
+                getTaskId(),
+                TaskType.EPIC,
+                getTitle(),
+                getStatus(),
+                getDescription());
+    }
 }

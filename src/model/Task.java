@@ -53,6 +53,15 @@ public class Task {
         this.taskId = taskId;
     }
 
+    public String toOutString() {
+        return String.format("%d,%s,%s,%s,%s,",
+                getTaskId(),
+                TaskType.TASK,
+                getTitle(),
+                getStatus(),
+                getDescription());
+    }
+
     @Override
     public String toString() {
         return "Task{" +
