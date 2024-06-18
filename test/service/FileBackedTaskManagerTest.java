@@ -5,6 +5,7 @@ import model.TaskStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,6 +18,7 @@ class FileBackedTaskManagerTest {
     @Test
     public void shouldLoadEmptyFile() throws Exception {
         Path tempFile = tempDir.resolve("tempFile.csv");
+        Files.createFile(tempFile);
         FileBackedTaskManager manager = new FileBackedTaskManager(tempFile);
 
         FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(tempFile);
