@@ -8,6 +8,13 @@ public class Task {
     private String description;
     private TaskStatus status;
 
+    public Task(int taskId, String title, String description, TaskStatus status) {
+        this.taskId = taskId;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+    }
+
     public Task(String title, String description, TaskStatus status) {
         this.title = title;
         this.description = description;
@@ -44,6 +51,15 @@ public class Task {
 
     public void setTaskId(int taskId) {
         this.taskId = taskId;
+    }
+
+    public String toOutString() {
+        return String.format("%d,%s,%s,%s,%s,",
+                getTaskId(),
+                TaskType.TASK,
+                getTitle(),
+                getStatus(),
+                getDescription());
     }
 
     @Override
