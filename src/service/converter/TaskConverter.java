@@ -1,6 +1,9 @@
 package service.converter;
 
-import model.*;
+import model.Subtask;
+import model.Task;
+import model.TaskStatus;
+import model.TaskType;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -45,11 +48,6 @@ public class TaskConverter {
                 task.setStartTime(startTime);
                 task.setDuration(duration);
                 return task;
-            case EPIC:
-                Epic epic = new Epic(id, title, description, status);
-                epic.setStartTime(startTime);
-                epic.setDuration(duration);
-                return epic;
             case SUBTASK:
                 int epicId = Integer.parseInt(fields[7]);
                 Subtask subtask = new Subtask(id, title, description, status, epicId);

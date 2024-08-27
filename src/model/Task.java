@@ -1,8 +1,8 @@
 package model;
 
-import java.util.Objects;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Task {
     private int taskId;
@@ -57,28 +57,28 @@ public class Task {
         return title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public TaskStatus getStatus() {
-        return status;
-    }
-
-    public int getTaskId() {
-        return taskId;
-    }
-
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public TaskStatus getStatus() {
+        return status;
+    }
+
     public void setStatus(TaskStatus status) {
         this.status = status;
+    }
+
+    public int getTaskId() {
+        return taskId;
     }
 
     public void setTaskId(int taskId) {
