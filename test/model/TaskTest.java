@@ -1,10 +1,13 @@
 package model;
 
-import model.*;
 import org.junit.jupiter.api.Test;
 import service.InMemoryTaskManager;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class TaskTest {
     InMemoryTaskManager taskManager = new InMemoryTaskManager();
@@ -12,7 +15,7 @@ class TaskTest {
     @Test
     public void testEqualBySelf() {
 
-        Task task = new Task("Задача 1", "Описание 1", TaskStatus.NEW);
+        Task task = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW, Duration.ofMinutes(15), LocalDateTime.now());
         taskManager.addTask(task);
 
         assertEquals(task, task);
@@ -21,9 +24,9 @@ class TaskTest {
     @Test
     public void testNotEqualBetweenTwoTasks() {
 
-        Task task1 = new Task("Задача 1", "Описание 1", TaskStatus.NEW);
+        Task task1 = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW, Duration.ofMinutes(15), LocalDateTime.now());
         taskManager.addTask(task1);
-        Task task2 = new Task("Задача 2", "Описание 2", TaskStatus.NEW);
+        Task task2 = new Task("Задача 2", "Описание задачи 2", TaskStatus.IN_PROGRESS, Duration.ofMinutes(15), LocalDateTime.now().plusMinutes(20));
         taskManager.addTask(task2);
 
         assertNotEquals(task1, task2);
@@ -32,9 +35,9 @@ class TaskTest {
     @Test
     public void testNotEqualBetweenTwoTasksById() {
 
-        Task task1 = new Task("Задача 1", "Описание 1", TaskStatus.NEW);
+        Task task1 = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW, Duration.ofMinutes(15), LocalDateTime.now());
         taskManager.addTask(task1);
-        Task task2 = new Task("Задача 2", "Описание 2", TaskStatus.NEW);
+        Task task2 = new Task("Задача 2", "Описание задачи 2", TaskStatus.IN_PROGRESS, Duration.ofMinutes(15), LocalDateTime.now().plusMinutes(20));
         taskManager.addTask(task2);
 
         assertNotEquals(task1.getTaskId(), task2.getTaskId());
@@ -42,14 +45,13 @@ class TaskTest {
 
     @Test
     public void testEqualTaskTitleBySelf() {
-        Task task = new Task("Задача", "Описание", TaskStatus.NEW);
-
-        assertEquals("Задача", task.getTitle());
+        Task task = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW, Duration.ofMinutes(15), LocalDateTime.now());
+        assertEquals("Задача 1", task.getTitle());
     }
 
     @Test
     public void testNotEqualByTitleDescriptionStatus() {
-        Task task = new Task("Задача", "Описание", TaskStatus.NEW);
+        Task task = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW, Duration.ofMinutes(15), LocalDateTime.now());
         int trueId = task.getTaskId();
 
         task.setTitle("new task");
@@ -64,7 +66,7 @@ class TaskTest {
 
     @Test
     public void testEqualByTaskId() {
-        Task task = new Task("Задача", "Описание", TaskStatus.NEW);
+        Task task = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW, Duration.ofMinutes(15), LocalDateTime.now());
         int trueId = task.getTaskId();
 
         assertEquals(trueId, task.getTaskId());
