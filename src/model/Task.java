@@ -96,6 +96,7 @@ public class Task {
     public void setDuration(Duration duration) {
         this.duration = duration;
     }
+
     public LocalDateTime getStartTime() {
         return startTime;
     }
@@ -139,6 +140,6 @@ public class Task {
 
     @Override
     public int hashCode() {
-        return Objects.hash(taskId, title, description, status);//, duration, startTime);
+        return Objects.hash(taskId, title, description, status);
     }
 }
