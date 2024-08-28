@@ -1,5 +1,8 @@
 package model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Subtask extends Task {
 
     private int epicId;
@@ -14,6 +17,16 @@ public class Subtask extends Task {
         this.epicId = epicId;
     }
 
+    public Subtask(String title, String description, TaskStatus status, int epicId, Duration duration, LocalDateTime startTime) {
+        super(title, description, status, duration, startTime);
+        this.epicId = epicId;
+    }
+
+    public Subtask(int taskId, String title, String description, TaskStatus status, LocalDateTime startTime, Duration duration, int epicId) {
+        super(taskId, title, description, status, startTime, duration);
+        this.epicId = epicId;
+    }
+
     public int getEpicId() {
         return epicId;
     }
@@ -23,13 +36,8 @@ public class Subtask extends Task {
     }
 
     @Override
-    public String toOutString() {
-        return String.format("%d,%s,%s,%s,%s,%d",
-                getTaskId(),
-                TaskType.SUBTASK,
-                getTitle(),
-                getStatus(),
-                getDescription(),
-                epicId);
+    public TaskType getType() {
+        return TaskType.SUBTASK;
     }
+
 }
