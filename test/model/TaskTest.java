@@ -52,7 +52,7 @@ class TaskTest {
     @Test
     public void testNotEqualByTitleDescriptionStatus() {
         Task task = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW, Duration.ofMinutes(15), LocalDateTime.now());
-        int trueId = task.getTaskId();
+        Integer trueId = task.getTaskId();
 
         task.setTitle("new task");
         task.setDescription("new desc");
@@ -67,7 +67,7 @@ class TaskTest {
     @Test
     public void testEqualByTaskId() {
         Task task = new Task("Задача 1", "Описание задачи 1", TaskStatus.NEW, Duration.ofMinutes(15), LocalDateTime.now());
-        int trueId = task.getTaskId();
+        Integer trueId = task.getTaskId();
 
         assertEquals(trueId, task.getTaskId());
     }
