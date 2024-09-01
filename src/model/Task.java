@@ -5,14 +5,14 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
-    private int taskId;
+    private Integer taskId;
     private String title;
     private String description;
     private TaskStatus status;
     private Duration duration;
     private LocalDateTime startTime;
 
-    public Task(int taskId, String title, String description, TaskStatus status) {
+    public Task(Integer taskId, String title, String description, TaskStatus status) {
         this.taskId = taskId;
         this.title = title;
         this.description = description;
@@ -44,7 +44,7 @@ public class Task {
         this.startTime = startTime;
     }
 
-    public Task(int taskId, String title, String description, TaskStatus status, LocalDateTime startTime, Duration duration) {
+    public Task(Integer taskId, String title, String description, TaskStatus status, LocalDateTime startTime, Duration duration) {
         this.taskId = taskId;
         this.title = title;
         this.description = description;
@@ -77,7 +77,7 @@ public class Task {
         this.status = status;
     }
 
-    public int getTaskId() {
+    public Integer getTaskId() {
         return taskId;
     }
 
